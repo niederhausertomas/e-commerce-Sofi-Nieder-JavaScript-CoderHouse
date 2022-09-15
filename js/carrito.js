@@ -1,4 +1,3 @@
-
 let monto=0;
 let opcion =1;
 let a=0;
@@ -7,9 +6,6 @@ let cuota;
 let flete=0;
 let nombre;
 let precio;
-
-
-
 
 let contenedorNav = document.createElement("div");
 contenedorNav.innerHTML = `<nav class="navbar navbar-dark bg-dark fixed-top">
@@ -49,38 +45,6 @@ contenedorNav.innerHTML = `<nav class="navbar navbar-dark bg-dark fixed-top">
 </nav>`;
 document.getElementById("navBar").appendChild(contenedorNav);
 
-let contenedorCarrousel = document.createElement("div");
-contenedorCarrousel.innerHTML = `
-<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="./images/1.jpg" class="d-block fCarrousel" alt="imagen del producto 1"/>
-        </div>
-        <div class="carousel-item">
-            <img src="./images/2.jpg" class="d-block fCarrousel" alt="imagen del producto 2"/>
-        </div>
-        <div class="carousel-item">
-            <img src="./images/3.jpg" class="d-block fCarrousel " alt="imagen del producto 3"/>
-        </div>
-        <div class="carousel-item">
-            <img src="./images/4.jpg" class="d-block fCarrousel" alt="imagen del producto 4"/>
-        </div>
-        <div class="carousel-item">
-            <img src="./images/5.jpg" class="d-block fCarrousel" alt="imagen del producto 5"/>
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
-`;
-document.getElementById("carrousel").appendChild(contenedorCarrousel);
-
 let productos = [
     {"Id": 1, "nombre": "Mesa Ratona ovalada", "precio": 4500, "imagen": 1},
     {"Id": 2, "nombre": "Sillon Gervasoni", "precio": 7000, "imagen": 2},
@@ -89,41 +53,13 @@ let productos = [
     {"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5}
 ];
 
-fetch('js/data.json')
-.then( (response) => response.json())
-.then( (data) => {
-    data.forEach((producto) => {
-        newCard(producto);
-    })
-})
-
-function guardarProductosLs(productos){
-    localStorage.setItem("productos", JSON.stringify(productos));
-}
-
-function cargarProductosLs(){
-    return JSON.parse(localStorage.getItem("productos")) || [];
-}
-
-guardarProductosLs(productos);
-
-function newCard(producto){
-    let contenedor = document.createElement("div");
-    contenedor.innerHTML = `<div class="card col-6 col-sm-3 border-0" style="width: 18rem;">
-            <img src="images/${producto.imagen}.jpg" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title text-center">${producto.nombre}</h5>
-                <p class="card-text text-center">Precio $ ${producto.precio}</p>
-                <p class="card-text text-center">Cantidad de stock ${producto.cantidad}</p>
-
-                <button class="Agregar" onClick="agregarProducto(${producto.Id})"> AGREGAR AL CARRITO </button>
-            </div>
-        </div>`
-    document.getElementById("Cards").appendChild(contenedor);
-}
-
 let ProductosCarrito =[];
 
+function agregarProducto(Id){
+    const productos = cargarProductosLs();
+    let elProducto = productos.find(item=> item.Id === Id);
+    ProductosCarrito.push(elProducto);
+}
 
 function cardCarrito(producto){
     let contenedor = document.createElement("div");
@@ -138,16 +74,14 @@ function cardCarrito(producto){
     document.getElementById("cardsCarrito").appendChild(contenedor);
 }
 
-function agregarProducto(Id){
-    const productos = cargarProductosLs();
-    let elProducto = productos.find(item=> item.Id === Id);
-    ProductosCarrito.push(elProducto);
-    cardCarrito(elProducto);
-}
 function chango(ProductosCarrito){
    for(let producto of ProductosCarrito){
-    cardCarrito(producto);
     console.log(producto);
+    let contenedor = document.createElement("div");
+    contenedor.innerHTML = `<div>
+    <h1>${producto.nombre}</h1>
+    </div>`
+    document.getElementById("cardsCarrito").appendChild(contenedor);
    }
 }
 
