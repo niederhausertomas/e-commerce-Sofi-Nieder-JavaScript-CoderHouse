@@ -19,10 +19,6 @@ contenedorNav.innerHTML = `<nav class="navbar navbar-dark bg-dark fixed-top">
             <a class="navbar-brand" href="index.html">Sofi Nieder Deco</a>
         </ul>
         <a href="./carrito.html" id="iconoCarrito" class="bg-dark">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-basket2" viewBox="0 0 16 16">
-                <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"/>
-                    <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"/>
-            </svg>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -89,23 +85,24 @@ let productos = [
     {"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5}
 ];
 
-fetch('js/data.json')
-.then( (response) => response.json())
-.then( (data) => {
-    data.forEach((producto) => {
-        newCard(producto);
-    })
+ new Promise((respuesta, rejected)=>{
+    let url = 'www.productos.com.ar'
+    if (url === 'www.productos.com.ar'){   
+    setTimeout(()=>{
+        respuesta(
+        fetch('js/data.json')
+        .then( (response) => response.json())
+        .then( (data) => {
+            data.forEach((producto) => {
+            newCard(producto);
+
+        })
+        }))
+        }, 2000);
+    } else{
+        rejected("400 not found")
+    }
 })
-
-function guardarProductosLs(productos){
-    localStorage.setItem("productos", JSON.stringify(productos));
-}
-
-function cargarProductosLs(){
-    return JSON.parse(localStorage.getItem("productos")) || [];
-}
-
-guardarProductosLs(productos);
 
 function newCard(producto){
     let contenedor = document.createElement("div");
@@ -138,30 +135,53 @@ function cardCarrito(producto){
     document.getElementById("cardsCarrito").appendChild(contenedor);
 }
 
+function guardarProductosCarrito(productos){
+    localStorage.setItem("productosCarrito", JSON.stringify(productos));
+}
+
+function cargarProductosCarrito(){
+    return JSON.parse(localStorage.getItem("productosCarrito")) || [];
+}
+
+function buscarProducto(Id){
+    return productos.find(item=> item.Id === Id)
+}
+
+function actualizarBotonCarrito(){
+    const productosCarrito = cargarProductosCarrito();
+    let cantidad= productosCarrito.length;
+    let contenido = `
+    <button type="button" class="btn btn-primary position-relative" id="canastaa">
+        <svg id="canasta" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"  class="bi bi-basket2" viewBox="0 0 16 16">
+            <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"/>
+            <path d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"/>
+        </svg>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            ${cantidad}
+        </span>
+    </button>
+    `;
+    document.getElementById("iconoCarrito").innerHTML=contenido;
+}
+
 function agregarProducto(Id){
-    const productos = cargarProductosLs();
-    let elProducto = productos.find(item=> item.Id === Id);
-    ProductosCarrito.push(elProducto);
-    cardCarrito(elProducto);
-}
-function chango(ProductosCarrito){
-   for(let producto of ProductosCarrito){
-    cardCarrito(producto);
-    console.log(producto);
-   }
+    Toastify({
+        text: "Producto agregado al carrito",
+        className: "info",
+        gravity: "bottom",
+        style: {
+        background: "linear-gradient( to right, rgb(42, 44, 44), rgb(42, 44, 44))",
+        }
+    }).showToast();
+
+    const productosCarrito = cargarProductosCarrito();
+    const producto = buscarProducto(Id);
+    productosCarrito.push(producto);
+    guardarProductosCarrito(productosCarrito);
+    actualizarBotonCarrito();
 }
 
-chango(ProductosCarrito);
-
-function cartelError(){
-      Swal.fire({
-        position: 'top-center',
-        icon: 'error',
-        title: 'La opcion ingresada no es valida!',
-        showConfirmButton: false,
-        timer: 2500
-      })
-}
+actualizarBotonCarrito();
 /*
 function respuestaChango(){
     actualizarCarrito();

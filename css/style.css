@@ -13,6 +13,18 @@ nav {
     width: 40px;
 }
 
+#canasta{
+    background-color:  rgb(42, 44, 44);
+    border: none;
+}
+
+
+#canastaa{
+    background-color:  rgb(42, 44, 44);
+    border-color: rgb(179, 170, 170);
+    margin: -5px;
+}
+
 #btnEmpleado{
     cursor: pointer;
 }
