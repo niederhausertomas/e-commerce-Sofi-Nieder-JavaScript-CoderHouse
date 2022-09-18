@@ -134,7 +134,10 @@ function buscarProducto(Id){
 
 function actualizarBotonCarrito(){
     const productosCarrito = cargarProductosCarrito();
-    let cantidad= productosCarrito.length;
+    let cantidad=0;
+    for(const prod of productosCarrito){
+        cantidad += prod.cantidad;
+    }
     let contenido = `
     <button type="button" class="btn btn-primary position-relative" id="canastaa">
         <svg id="canasta" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"  class="bi bi-basket2" viewBox="0 0 16 16">
