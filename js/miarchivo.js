@@ -11,8 +11,8 @@ let precio;
 
 
 
-let contenedorNav = document.createElement("div");
-contenedorNav.innerHTML = `<nav class="navbar navbar-dark bg-dark fixed-top">
+let contenedorNav = "";
+contenedorNav += `<nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         <ul>
             <a class="navbar-brand" href="index.html"><img src="../images/logosofinieder.jpg" id="logo" alt="logo de Sofi Nieder"/></a>
@@ -43,10 +43,10 @@ contenedorNav.innerHTML = `<nav class="navbar navbar-dark bg-dark fixed-top">
         </div>
     </div>
 </nav>`;
-document.getElementById("navBar").appendChild(contenedorNav);
+document.getElementById("navBar").innerHTML=contenedorNav;
 
-let contenedorCarrousel = document.createElement("div");
-contenedorCarrousel.innerHTML = `
+let contenedorCarrousel = "";
+contenedorCarrousel += `
 <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -75,14 +75,14 @@ contenedorCarrousel.innerHTML = `
     </button>
 </div>
 `;
-document.getElementById("carrousel").appendChild(contenedorCarrousel);
+document.getElementById("carrousel").innerHTML=contenedorCarrousel;
 
 let productos = [
-    {"Id": 1, "nombre": "Mesa Ratona ovalada", "precio": 4500, "imagen": 1, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
-    {"Id": 2, "nombre": "Sillon Gervasoni", "precio": 7000, "imagen": 2, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
-    {"Id": 3, "nombre": "Almohadones de respaldo 40x40", "precio": 1000, "imagen": 3, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
-    {"Id": 4, "nombre": "Perchero Escalera", "precio": 2500, "imagen": 4, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
-    {"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."}
+    {"Id": 1, "nombre": "Mesa Ratona ovalada", "precio": 4500, "imagen": 1, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias.", "cantidad": 0},
+    {"Id": 2, "nombre": "Sillon Gervasoni", "precio": 7000, "imagen": 2, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias.", "cantidad": 0},
+    {"Id": 3, "nombre": "Almohadones de respaldo 40x40", "precio": 1000, "imagen": 3, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias.", "cantidad": 0},
+    {"Id": 4, "nombre": "Perchero Escalera", "precio": 2500, "imagen": 4, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias.", "cantidad": 0},
+    {"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias.", "cantidad": 0}
     ];
 
  new Promise((respuesta, rejected)=>{
@@ -158,12 +158,55 @@ function agregarProducto(Id){
         background: "linear-gradient( to right, rgb(42, 44, 44), rgb(42, 44, 44))",
         }
     }).showToast();
-
     const productosCarrito = cargarProductosCarrito();
-    const producto = buscarProducto(Id);
-    productosCarrito.push(producto);
+    let pos = productosCarrito.findIndex(item => item.Id === Id);
+    if(pos > -1){
+        productosCarrito[pos].cantidad += 1;
+    } else{
+        const producto = buscarProducto(Id);
+        producto.cantidad = 1;
+        productosCarrito.push(producto);
+    }
     guardarProductosCarrito(productosCarrito);
     actualizarBotonCarrito();
+    newCardCarrito()
+}
+
+function agregar(Id){
+    const productosCarrito = cargarProductosCarrito();
+    let pos = productosCarrito.findIndex(item => item.Id === Id);
+    if(pos > -1){
+        productosCarrito[pos].cantidad += 1;
+    } else{
+        const producto = buscarProducto(Id);
+        producto.cantidad = 1;
+        productosCarrito.push(producto);
+    }
+    guardarProductosCarrito(productosCarrito);
+    actualizarBotonCarrito();
+    newCardCarrito()
+}
+
+function eliminarProducto(Id){
+
+    const productosCarrito = cargarProductosCarrito();
+    let pos = productosCarrito.findIndex(item => item.Id === Id);
+    productosCarrito[pos].cantidad -=1;
+    if (productosCarrito[pos].cantidad == 0){
+        productosCarrito.splice(pos, 1)
+    }
+    guardarProductosCarrito(productosCarrito);
+    actualizarBotonCarrito();
+    newCardCarrito()
+}
+
+function eliminar(Id){
+    const productosCarrito = cargarProductosCarrito();
+    let pos = productosCarrito.findIndex(item => item.Id === Id);
+        productosCarrito.splice(pos, 1)
+    guardarProductosCarrito(productosCarrito);
+    actualizarBotonCarrito();
+    newCardCarrito()
 }
 
 actualizarBotonCarrito();
