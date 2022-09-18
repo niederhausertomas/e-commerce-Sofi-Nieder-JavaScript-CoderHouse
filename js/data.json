@@ -1,7 +1,7 @@
 [
-{"Id": 1, "nombre": "Mesa Ratona ovalada", "precio": 4500, "imagen": 1},
-{"Id": 2, "nombre": "Sillon Gervasoni", "precio": 7000, "imagen": 2},
-{"Id": 3, "nombre": "Almohadones de respaldo 40x40", "precio": 1000, "imagen": 3},
-{"Id": 4, "nombre": "Perchero Escalera", "precio": 2500, "imagen": 4},
-{"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5}
+{"Id": 1, "nombre": "Mesa Ratona ovalada", "precio": 4500, "imagen": 1, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+{"Id": 2, "nombre": "Sillon Gervasoni", "precio": 7000, "imagen": 2, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+{"Id": 3, "nombre": "Almohadones de respaldo 40x40", "precio": 1000, "imagen": 3, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+{"Id": 4, "nombre": "Perchero Escalera", "precio": 2500, "imagen": 4, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+{"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."}
 ]

@@ -78,12 +78,12 @@ contenedorCarrousel.innerHTML = `
 document.getElementById("carrousel").appendChild(contenedorCarrousel);
 
 let productos = [
-    {"Id": 1, "nombre": "Mesa Ratona ovalada", "precio": 4500, "imagen": 1},
-    {"Id": 2, "nombre": "Sillon Gervasoni", "precio": 7000, "imagen": 2},
-    {"Id": 3, "nombre": "Almohadones de respaldo 40x40", "precio": 1000, "imagen": 3},
-    {"Id": 4, "nombre": "Perchero Escalera", "precio": 2500, "imagen": 4},
-    {"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5}
-];
+    {"Id": 1, "nombre": "Mesa Ratona ovalada", "precio": 4500, "imagen": 1, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+    {"Id": 2, "nombre": "Sillon Gervasoni", "precio": 7000, "imagen": 2, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+    {"Id": 3, "nombre": "Almohadones de respaldo 40x40", "precio": 1000, "imagen": 3, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+    {"Id": 4, "nombre": "Perchero Escalera", "precio": 2500, "imagen": 4, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."},
+    {"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias."}
+    ];
 
  new Promise((respuesta, rejected)=>{
     let url = 'www.productos.com.ar'
@@ -95,7 +95,6 @@ let productos = [
         .then( (data) => {
             data.forEach((producto) => {
             newCard(producto);
-
         })
         }))
         }, 2000);
@@ -111,7 +110,7 @@ function newCard(producto){
             <div class="card-body">
                 <h5 class="card-title text-center">${producto.nombre}</h5>
                 <p class="card-text text-center">Precio $ ${producto.precio}</p>
-                <p class="card-text text-center">Cantidad de stock ${producto.cantidad}</p>
+                <p class="card-text text-center">${producto.descripcion}</p>
 
                 <button class="Agregar" onClick="agregarProducto(${producto.Id})"> AGREGAR AL CARRITO </button>
             </div>
@@ -120,20 +119,6 @@ function newCard(producto){
 }
 
 let ProductosCarrito =[];
-
-
-function cardCarrito(producto){
-    let contenedor = document.createElement("div");
-    contenedor.innerHTML = `<div class="card col-6 col-sm-3 border-0" style="width: 18rem;">
-    <img src="images/${producto.imagen}.jpg" class="card-img-top" alt="...">
-    <div class="card-body">
-    <h5 class="card-title text-center">${producto.nombre}</h5>
-    <p class="card-text text-center">Precio $ ${producto.precio}</p>
-    <p class="card-text text-center">Cantidad de stock ${producto.cantidad}</p>
-    </div>
-    </div>`
-    document.getElementById("cardsCarrito").appendChild(contenedor);
-}
 
 function guardarProductosCarrito(productos){
     localStorage.setItem("productosCarrito", JSON.stringify(productos));
