@@ -36,7 +36,7 @@ contenedorNav += `<nav class="navbar navbar-dark bg-dark fixed-top">
                         <a class="nav-link" href="#tituloProductos">Productos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="navbar-brand" id="btnEmpleado" >Ingresar como empleado</a>
+                        <a class="navbar-brand" href="#us" >About Us</a>
                     </li>
             </div>
         </div>
@@ -83,6 +83,33 @@ let productos = [
     {"Id": 4, "nombre": "Perchero Escalera", "precio": 2500, "imagen": 4, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias.", "cantidad": 0},
     {"Id": 5, "nombre": "Espejo redondo", "precio": 7000, "imagen": 5, "descripcion": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque quis eum odio eius fuga in nesciunt, voluptas quisquam quia dolorum velit ipsum assumenda earum consequuntur vero unde cum commodi alias.", "cantidad": 0}
     ];
+
+    let contenedorUs = "";
+    contenedorUs += `
+    <div class="clearfix">
+      <img src="images/${productos[0].imagen}.jpg" class="col-md-6 float-md-end mb-3 ms-md-3 width: 90%;
+      height: 300px;" alt="...">
+    
+      <p>
+        A paragraph of placeholder text. We're using it here to show the use of the clearfix class. We're adding quite a few meaningless phrases here to demonstrate how the columns interact here with the floated image.
+      </p>
+    
+      <p>
+        As you can see the paragraphs gracefully wrap around the floated image. Now imagine how this would look with some actual content in here, rather than just this boring placeholder text that goes on and on, but actually conveys no tangible information at. It simply takes up space and should not really be read.
+      </p>
+    
+      <p>
+        And yet, here you are, still persevering in reading this placeholder text, hoping for some more insights, or some hidden easter egg of content. A joke, perhaps. Unfortunately, there's none of that here.
+      </p>
+    </div>
+    `;
+    document.getElementById("us").innerHTML=contenedorUs;
+
+
+
+
+
+
 
  new Promise((respuesta, rejected)=>{
     let url = 'www.productos.com.ar'
