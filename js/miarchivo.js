@@ -4,7 +4,6 @@ let opcion =1;
 let a=0;
 let b=0; 
 let cuota;
-let flete=0;
 let nombre;
 let precio;
 
@@ -216,7 +215,7 @@ function eliminar(Id){
 }
 
 function eliminarTodos(){
-    
+
     localStorage.removeItem("productosCarrito");
     newCardCarrito();
     actualizarBotonCarrito();
@@ -231,6 +230,41 @@ function total(){
 
 
 actualizarBotonCarrito();
+
+
+
+function montoKm(km){
+    let totalFlete=km*120;
+    let contenidoFlete="";
+    contenidoFlete += `<div>
+    El moto total por flete es de $ ${totalFlete} </div>`;
+  document.getElementById("fletee").innerHTML=contenidoFlete;
+}
+
+function flete(){
+    let contenidoFlete="";
+    contenidoFlete += `
+                    <div class="card mb-3" style="width: 95%; height: 195px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="140px" height="140px" fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+                <path d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                </svg></div>
+                <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Flete</h5>
+                    <p class="card-text">Precio por kilometro: $ 120 </p>
+                    Ingrese los km a transportar <input id="cantKM" onkeyup="montoKm(this.value)" type="number">
+                    <p class="card-text" id="fletee"></p>
+                    <a href="#" class="btn btn" onclick="confirmarFlete()">Confirmar Flete (+)</a>
+                </div>
+                </div>
+            </div>
+            </div>
+            `
+        document.getElementById("cardFlete").innerHTML=contenidoFlete;
+}
+
 /*
 function respuestaChango(){
     actualizarCarrito();
@@ -271,82 +305,5 @@ function respuestaChango(){
     formaDePago(opcion);
 }
 
-let empleado= document.getElementById("btnEmpleado");
-empleado.addEventListener ("click", respuestaClick);
 
-function cartelErrorCodigo(){
-    Swal.fire({
-      position: 'top-center',
-      icon: 'error',
-      title: 'El codigo ingresado no es valido!',
-      showConfirmButton: false,
-      timer: 2000
-    })
-}
-
-function cantidadProductos(){
-    Swal.fire({
-        position: 'top-center',
-        icon: 'success',
-        title: 'actualmente hay ' + productos.length + ' productos distintos.',
-        showConfirmButton: false,
-        timer: 2000
-      })
-}
-
-function respuestaClick(){
-    let contrasenia = parseInt(prompt("Ingrese codigo de acceso: "));
-    const clave = (contrasenia == 3636) ? true: false;
-    clave ? cantidadProductos() : cartelErrorCodigo();
-    if (clave){
-        opcion = parseInt(prompt("Ingrese el numero del producto para cargar el stock : \n 1- Mesa Ratona ovalada. $ 4500 \n 2- Sillon Gervasoni $ 7000 \n 3- Almohadones de respaldo 40x40 $ 1000 \n 4- Perchero Escalera $ 2500 \n 5- Espejo redondo $ 7000 \n 6-Ver stock de un producto especifico. \n 7- Ver stock total actual. "));
-        switch (opcion) {
-        case 1:
-            let cant=parseInt(prompt("Ingrese la cantidad de productos que ingresan: "));    
-            productos[0].cantidad+=cant;
-        break; 
-        case 2:                
-            cant=parseInt(prompt("Ingrese la cantidad de productos que ingresan: "));    
-            productos[1].cantidad+=cant;
-            break; 
-        case 3:
-            cant=parseInt(prompt("Ingrese la cantidad de productos que ingresan: "));    
-            productos[2].cantidad+=cant;
-            break; 
-        case 4:
-            cant=parseInt(prompt("Ingrese la cantidad de productos que ingresan: "));    
-            productos[3].cantidad+=cant;
-            break; 
-        case 5:
-            cant=parseInt(prompt("Ingrese la cantidad de productos que ingresan: "));    
-            productos[4].cantidad+=cant;
-            break;
-        case 6:
-            let a=prompt("Mesa Ratona ovalada \n Sillon Gervasoni \n Almohadones de respaldo \n Perchero Escalera \n Espejo redondo \n Ingrese el nombre del producto que desea ver el stock").toUpperCase();
-            console.log(" Stock actual de: " + a )
-            console.log(" ........................ ")
-            let t=0;
-            for (const producto of stock){
-                if(producto.nombre===a){
-                    console.log(" - hay " + producto.cantidad + " unidades del producto " + a );
-                    t++;
-                } 
-            }
-            if (t==0){
-                console.log(" cero, porque no existe el producto " + a);
-            }    
-            break;
-        case 7:
-            console.log(" Stock actual: ")
-            console.log(" ................. ")
-            for (const producto of stock){
-                console.log(" - " + producto.nombre + " " + producto.cantidad);
-            }
-            break; 
-        default:
-            cartelError();
-        break; 
-                }       
-            
-    }
-}*/
+*/
