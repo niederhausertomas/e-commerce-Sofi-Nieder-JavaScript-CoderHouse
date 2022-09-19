@@ -188,6 +188,7 @@ function agregar(Id){
     guardarProductosCarrito(productosCarrito);
     actualizarBotonCarrito();
     newCardCarrito()
+    compraTotal()
 }
 
 function eliminarProducto(Id){
@@ -201,6 +202,7 @@ function eliminarProducto(Id){
     guardarProductosCarrito(productosCarrito);
     actualizarBotonCarrito();
     newCardCarrito()
+    compraTotal()
 }
 
 function eliminar(Id){
@@ -210,7 +212,23 @@ function eliminar(Id){
     guardarProductosCarrito(productosCarrito);
     actualizarBotonCarrito();
     newCardCarrito()
+    compraTotal()
 }
+
+function eliminarTodos(){
+    
+    localStorage.removeItem("productosCarrito");
+    newCardCarrito();
+    actualizarBotonCarrito();
+    compraTotal();
+}
+
+
+function total(){
+    const productosCarrito = cargarProductosCarrito();
+    return productosCarrito.reduce((acumulador, item)=> acumulador + item.cantidad, 0)
+}
+
 
 actualizarBotonCarrito();
 /*
